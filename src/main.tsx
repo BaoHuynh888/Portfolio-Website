@@ -5,7 +5,7 @@ import App from './App.tsx'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <script type="module" src="./src/main.tsx"></script>
+    <script type="module" src="/main.js"></script>
     <App />
   </StrictMode>,
 )
