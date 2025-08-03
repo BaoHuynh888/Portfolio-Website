@@ -28,7 +28,7 @@ const Hero = () => {
   }
 
   return (
-    <section id="home" className="h-screen flex items-center justify-center bg-[#141414]">
+    <section id="home" className="h-[97vh] flex items-center justify-center bg-[#141414]">
       <motion.div className="text-center" variants={containerVariants} initial="hidden" animate="visible">
         <motion.h1 variants={itemVariants} className="text-6xl font-bold mb-4">
           Bao Huynh

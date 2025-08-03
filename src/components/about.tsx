@@ -13,38 +13,45 @@ const About = () => {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.3,
-        delayChildren: 0.2,
+        staggerChildren: 0.15,
+        delayChildren: 0.1,
+        duration: 0.6,
+        ease: "easeOut" as const,
       },
     },
   }
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
+    hidden: { opacity: 0, y: 30 },
     visible: {
       opacity: 1,
       y: 0,
       transition: {
         type: "spring" as const,
-        stiffness: 100,
+        stiffness: 80,
+        damping: 20,
+        duration: 0.8,
       },
     },
   }
 
   const tabContentVariants = {
-    hidden: { opacity: 0, x: 20 },
+    hidden: { opacity: 0, x: 30, scale: 0.95 },
     visible: {
       opacity: 1,
       x: 0,
       transition: {
-        duration: 0.3,
+        duration: 0.5,
+        ease: [0.25, 0.46, 0.45, 0.94] as [number, number, number, number],
       },
     },
     exit: {
       opacity: 0,
-      x: -20,
+      x: -30,
+      scale: 0.95,
       transition: {
-        duration: 0.2,
+        duration: 0.3,
+        ease: "easeIn" as const,
       },
     },
   }
@@ -92,18 +99,41 @@ const About = () => {
       case "about":
         return (
           <motion.div key="about" variants={tabContentVariants} initial="hidden" animate="visible" exit="exit">
-            <p className="text-base mb-6 text-gray-300">
+            <motion.p
+              className="text-base mb-6 text-gray-300"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1, duration: 0.6 }}
+            >
               I'm Bao Huynh, a recent graduate with a degree in Computer Science and Business Applications from the University of California - Riverside. 
               I am a software engineer based in Los Angeles, California looking for oppotunrities to enhance my tehnical skills through hands-on experience.
-            </p>
-            <p className="text-lg mb-6 text-gray-300">
+            </motion.p>
+            <motion.p
+              className="text-lg mb-6 text-gray-300"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2, duration: 0.6 }}
+            >
               My work spans across various mediums, including UX/UI design, web development, and Full Stack engineering.
-            </p>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            </motion.p>
+
+            <motion.div
+              className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3, duration: 0.6 }}
+            >
               {contactInfo.map((info, index) => {
                 const IconComponent = info.icon
                 return (
-                  <div key={index} className="flex items-start gap-3">
+                  <motion.div
+                    key={index}
+                    className="flex items-start gap-3"
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.4 + index * 0.1, duration: 0.5 }}
+                    whileHover={{ scale: 1.02, transition: { duration: 0.2 } }}
+                  >
                     <IconComponent size={18} className="text-blue-400 mt-1" />
                     <div className="flex flex-col">
                       <span className="text-gray-400 text-sm mb-1">{info.label}:</span>
@@ -111,23 +141,34 @@ const About = () => {
                         {info.value}
                       </span>
                     </div>
-                  </div>
+                  </motion.div>
                 )
               })}
-            </div>
+            </motion.div>
 
 
             <motion.button
               onClick={handleDownloadResume}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="flex items-center gap-2 bg-blue-600 text-white px-8 py-3 rounded-full text-lg font-semibold hover:bg-blue-700 transition duration-300"
+              whileHover={{
+                scale: 1.05,
+                boxShadow: "0 10px 25px rgba(59, 130, 246, 0.3)",
+                transition: { duration: 0.3, ease: "easeOut" },
+              }}
+              whileTap={{
+                scale: 0.98,
+                transition: { duration: 0.1 },
+              }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.8, duration: 0.6 }}
+              className="flex items-center gap-2 bg-blue-600 text-white px-8 py-3 rounded-full text-lg font-semibold hover:bg-blue-700 transition-all duration-300 ease-out"
             >
               <Download size={20} />
               Download Resume
             </motion.button>
           </motion.div>
         )
+
       case "skills":
         return (
           <motion.div
@@ -139,20 +180,34 @@ const About = () => {
             className="grid grid-cols-1 md:grid-cols-2 gap-6"
           >
             {skills.map((skillGroup, index) => (
-              <div key={skillGroup.category} className="mb-6">
+              <motion.div
+                key={skillGroup.category}
+                className="mb-6"
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.15, duration: 0.6, ease: "easeOut" }}
+              >
                 <h4 className="text-lg font-semibold text-blue-400 mb-3">{skillGroup.category}</h4>
                 <div className="space-y-2">
                   {skillGroup.items.map((skill, skillIndex) => (
-                    <div key={skill} className="flex items-center">
+                    <motion.div
+                      key={skill}
+                      className="flex items-center"
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: index * 0.15 + skillIndex * 0.05, duration: 0.4 }}
+                      whileHover={{ x: 5, transition: { duration: 0.2 } }}
+                    >
                       <div className="w-2 h-2 bg-blue-500 rounded-full mr-3"></div>
                       <span className="text-sm text-gray-300">{skill}</span>
-                    </div>
+                    </motion.div>
                   ))}
                 </div>
-              </div>
+              </motion.div>
             ))}
           </motion.div>
         )
+
       case "education":
         return (
           <motion.div
@@ -164,14 +219,21 @@ const About = () => {
             className="space-y-6"
           >
             {education.map((edu, index) => (
-              <div key={index} className="border-l-2 border-blue-500 pl-6 pb-6">
+              <motion.div
+                key={index}
+                className="border-l-2 border-blue-500 pl-6 pb-6"
+                initial={{ opacity: 0, x: -30 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: index * 0.2, duration: 0.6, ease: "easeOut" }}
+                whileHover={{ x: 5, transition: { duration: 0.3 } }}
+              >
                 <h4 className="text-xl font-semibold text-blue-400 mb-2">{edu.degree}</h4>
                 <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-2">
                   <span className="text-gray-300 font-medium">{edu.school}</span>
                   <span className="text-gray-400 text-sm">{edu.year}</span>
                 </div>
                 <p className="text-gray-300 text-sm leading-relaxed">{edu.description}</p>
-              </div>
+              </motion.div>
             ))}
           </motion.div>
         )
